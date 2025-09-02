@@ -1,0 +1,216 @@
+/* beautiful.css
+   Designed to give a modern, animated UI for RecipeAI
+   Place this file in: static/css/beautiful.css
+*/
+
+/* =============  variables  ============= */
+:root{
+  --bg-1: #0b1220;
+  --bg-2: #071827;
+  --accent: #7de3a6;
+  --accent-2: #6ec9ff;
+  --glass: rgba(255,255,255,0.03);
+  --muted: #9fb0c0;
+  --txt: #e6f3fb;
+  --card: rgba(255,255,255,0.04);
+  --radius: 14px;
+  --shadow-1: 0 8px 24px rgba(2,6,23,0.6);
+  --glass-2: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  --accent-glow: rgba(110,211,255,0.08);
+}
+
+/* =============  base  ============= */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:
+    radial-gradient(800px 400px at 10% 10%, rgba(110,211,255,0.04), transparent 10%),
+    radial-gradient(700px 350px at 90% 80%, rgba(126,231,135,0.03), transparent 8%),
+    linear-gradient(180deg,var(--bg-1),var(--bg-2) 60%);
+  color:var(--txt);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-y:auto;
+  line-height:1.45;
+}
+
+/* tiny utilities */
+.hidden{display:none!important}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* =============  background particles  ============= */
+.particle{
+  position:fixed;
+  pointer-events:none;
+  mix-blend-mode:screen;
+  filter:blur(16px) contrast(120%);
+  opacity:0.14;
+}
+.layer-a{
+  width:60vmax;height:60vmax;left:-10vw;top:-20vh;
+  background: radial-gradient(circle at 40% 30%, rgba(110,211,255,0.08), transparent 20%), radial-gradient(circle at 60% 70%, rgba(126,231,135,0.05), transparent 10%);
+  animation: driftA 28s linear infinite;
+}
+.layer-b{
+  width:40vmax;height:40vmax;right:-8vw;bottom:-16vh;
+  background: radial-gradient(circle at 20% 40%, rgba(255,159,102,0.04), transparent 20%);
+  animation: driftB 34s linear infinite;
+}
+@keyframes driftA{0%{transform:translateY(0)}50%{transform:translateY(12px)}100%{transform:translateY(0)}}
+@keyframes driftB{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+/* floating small icons - optional decorative SVGs */
+.food-floating{position:fixed;right:2rem;top:20rem;opacity:0.28;pointer-events:none}
+.food-floating img{width:48px;height:48px;position:absolute;will-change:transform,opacity}
+.float-1{left:0;animation:float1 6s ease-in-out infinite}
+.float-2{left:18px;top:18px;animation:float2 7.2s ease-in-out infinite}
+.float-3{left:-10px;top:36px;animation:float3 5.6s ease-in-out infinite}
+@keyframes float1{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
+@keyframes float2{0%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(10px) rotate(6deg)}100%{transform:translateY(0) rotate(-6deg)}}
+@keyframes float3{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+/* =============  NAVBAR  ============= */
+.navbar{
+  position:sticky;top:0;z-index:9999;
+  backdrop-filter: blur(6px) saturate(120%);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1120px;margin:0 auto;padding:12px 20px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;color:var(--txt);text-decoration:none;font-weight:800;font-size:1.05rem}
+.logo span{background:linear-gradient(90deg,var(--accent-2),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hamburger{display:none;background:transparent;border:none;color:var(--txt);font-size:20px;padding:6px;border-radius:8px}
+
+/* main nav */
+.main-nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0;align-items:center}
+.main-nav a{color:var(--muted);text-decoration:none;padding:8px 10px;border-radius:8px;font-weight:600}
+.main-nav a:hover{color:var(--txt);background:rgba(255,255,255,0.02);transform:translateY(-2px)}
+
+/* actions */
+.nav-actions{display:flex;align-items:center;gap:10px}
+.usage{color:var(--muted);font-weight:600;font-size:0.95rem;margin-right:6px}
+.btn{padding:8px 14px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+.btn-ghost{background:transparent;color:var(--txt);border:1px solid rgba(255,255,255,0.03)}
+.btn-primary{background:linear-gradient(90deg,var(--accent-2),var(--accent));color:#02202a;box-shadow:0 8px 24px rgba(0,0,0,0.45)}
+.btn-cta{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#02202a;padding:12px 18px;border-radius:12px}
+
+/* =============  HERO  ============= */
+.hero{padding:48px 0 26px}
+.hero-inner{display:flex;gap:28px;align-items:center;justify-content:space-between;max-width:1120px;margin:0 auto;padding:0 20px}
+.hero-copy{max-width:640px}
+.hero h1{font-size:2.2rem;margin:0 0 8px;line-height:1.05;letter-spacing:-0.6px}
+.subtitle{color:var(--muted);margin:0 0 18px;font-size:1.05rem}
+
+/* search form */
+.search-form{display:block;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow-1)}
+.inputs{display:flex;gap:10px;margin-bottom:10px}
+.search-form input[type="text"], .search-form input[type="search"], .search-form input[type="email"]{
+  background:transparent;border:1px solid rgba(255,255,255,0.04);padding:12px;border-radius:10px;color:var(--txt);outline:none;font-size:0.95rem;flex:1;
+  transition: box-shadow .18s ease, transform .12s ease, border-color .12s ease;
+}
+.search-form input::placeholder{color:rgba(200,220,230,0.4)}
+.search-form input:focus{box-shadow:0 8px 28px var(--accent-glow);border-color:rgba(110,211,255,0.22);transform:translateY(-2px)}
+
+.controls-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.filters label{display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.12);padding:8px 10px;border-radius:999px;border:1px solid rgba(255,255,255,0.02);color:var(--muted);font-weight:600}
+.chip{padding:8px 12px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--txt);border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+.chip:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(0,0,0,0.45)}
+
+/* hero visual card */
+.hero-visual{width:360px;display:flex;align-items:center;justify-content:center}
+.mock-card{width:100%;border-radius:16px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow-1);transform:translateY(0);transition:transform .45s cubic-bezier(.2,.9,.3,1)}
+.mock-card:hover{transform:translateY(-10px) scale(1.01)}
+.mock-img{width:100%;height:200px;object-fit:cover;display:block}
+.mock-meta{padding:12px;color:var(--txt)}
+.mock-meta h3{margin:0 0 6px;font-size:1.05rem}
+.mock-meta p{margin:0;color:var(--muted)}
+
+/* =============  RECIPES GRID  ============= */
+.recipes{padding:28px 20px}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.section-head h2{margin:0;font-size:1.25rem}
+.results-area{display:block}
+.recipe-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:start}
+
+/* recipe card */
+.recipe-card{
+  display:flex;flex-direction:column;gap:12px;padding:12px;border-radius:14px;background:var(--card);border:1px solid rgba(255,255,255,0.03);box-shadow:var(--shadow-1);overflow:hidden;min-height:180px;position:relative;transition:transform .28s ease,box-shadow .28s ease;
+}
+.recipe-card:hover{transform:translateY(-8px);box-shadow:0 36px 80px rgba(2,6,23,0.7)}
+.recipe-card .recipe-head{display:flex;gap:12px;align-items:center}
+.recipe-card .recipe-img{width:96px;height:96px;border-radius:10px;object-fit:cover;flex:0 0 96px;border:1px solid rgba(255,255,255,0.04)}
+.recipe-card .title{font-weight:800;font-size:1.05rem;margin:0;color:var(--txt)}
+.recipe-card .desc{color:var(--muted);font-size:0.95rem}
+.recipe-card .ingredients{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.pill{padding:6px 8px;border-radius:999px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));color:var(--txt);font-weight:600;border:1px solid rgba(255,255,255,0.03);font-size:0.85rem}
+
+/* expandable details */
+.card-details{height:0;overflow:hidden;transition:height .28s ease;opacity:0}
+.card-details.open{opacity:1;height:auto;padding-top:8px}
+
+/* uses meta at bottom */
+.uses{margin-top:auto;color:var(--muted);font-size:0.9rem}
+
+/* skeleton loader style */
+.skeleton{position:relative;overflow:hidden;background:linear-gradient(180deg, rgba(0,0,0,0.04), rgba(255,255,255,0.02));min-height:120px}
+.skeleton::after{content:"";position:absolute;left:-120%;top:0;width:120%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);animation:shimmer 1.6s linear infinite}
+
+/* no results */
+.no-results{padding:18px;color:var(--muted);text-align:center;border-radius:10px;}
+
+/* =============  HOW SECTION  ============= */
+.how{padding:28px 20px;border-top:1px solid rgba(255,255,255,0.02);display:flex;gap:20px;align-items:center;justify-content:space-between}
+.how-list{max-width:640px;margin:0;padding-left:20px}
+.how-list li{margin:10px 0;color:var(--muted);font-size:0.98rem}
+.how-visual img{max-width:340px;display:block;border-radius:10px;box-shadow:var(--shadow-1)}
+
+/* =============  FOOTER  ============= */
+.site-footer{padding:22px 20px;border-top:1px solid rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center;color:var(--muted)}
+
+/* =============  MODAL (auth)  ============= */
+.modal{position:fixed;inset:0;background:linear-gradient(0deg, rgba(2,6,23,0.6), rgba(2,6,23,0.6));display:flex;align-items:center;justify-content:center;z-index:9999}
+.modal-panel{width:420px;max-width:calc(100% - 40px);background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 16px 48px rgba(0,0,0,0.65);position:relative;transform:translateY(-8px);animation:pop .18s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;right:8px;top:8px;border:none;background:transparent;color:var(--muted);font-size:16px;cursor:pointer}
+.tabs{display:flex;gap:6px;margin-bottom:10px}
+.tab{padding:8px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted);cursor:pointer}
+.tab.active{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#02202a;border-color:transparent}
+
+/* auth form */
+.auth-form{display:flex;flex-direction:column;gap:10px}
+.auth-form label{display:flex;flex-direction:column;font-size:0.95rem;color:var(--muted);gap:6px}
+.auth-form input{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--txt);outline:none}
+.form-actions{display:flex;justify-content:flex-end}
+.form-error{color:#ffd5d5;font-weight:700;margin-top:6px}
+
+/* =============  small screens  ============= */
+@media (max-width:900px){
+  .hero-inner{flex-direction:column-reverse;align-items:stretch}
+  .hero-visual{order:-1;margin-bottom:12px}
+  .nav-inner{padding:8px 16px}
+  .main-nav{display:none}
+  .hamburger{display:inline-block}
+  .food-floating{display:none}
+}
+
+/* mobile nav open */
+.main-nav.open{display:block;position:absolute;left:12px;top:70px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px;box-shadow:var(--shadow-1)}
+.main-nav.open ul{flex-direction:column;gap:8px}
+
+/* =============  animations  ============= */
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.fade-in{animation:fadeIn .6s ease both}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:none}}
+
+/* respect reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+
+/* extra spacing helpers */
+.spacer{height:18px}

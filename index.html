@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RecipeAI — Smart Recipe Recommender</title>
+  <meta name="description" content="Give the ingredients you have and let AI suggest delicious recipes. Login to save usage." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- floating decorative elements -->
+  <div class="particle layer-a"></div>
+  <div class="particle layer-b"></div>
+  <div class="food-floating" aria-hidden="true">
+    <img src="/static/img/leaf.svg" class="float-1" alt="" />
+    <img src="/static/img/chef-hat.svg" class="float-2" alt="" />
+    <img src="/static/img/spoon.svg" class="float-3" alt="" />
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <div class="brand" aria-hidden="false">
+        <button id="mobile-menu-toggle" class="hamburger" aria-label="Open menu" aria-expanded="false">☰</button>
+        <a class="logo" href="/">🍳 <span>RecipeAI</span></a>
+        <nav id="main-nav" class="main-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#recipes">Recipes</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="nav-actions">
+        <div id="usageText" class="usage" aria-live="polite"></div>
+        <button id="btn-login" class="btn btn-ghost">Login</button>
+        <button id="btn-signup" class="btn btn-primary">Sign up</button>
+        <button id="btn-logout" class="btn hidden">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO / SEARCH -->
+  <main>
+    <section id="hero" class="hero">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1>Turn your pantry into dinner.</h1>
+          <p class="subtitle">Type the ingredients you have — we'll generate fresh, practical recipes using AI. Free for 5 recipes/day.</p>
+
+          <form id="searchForm" class="search-form" autocomplete="off" novalidate>
+            <div class="inputs">
+              <input id="ingredientInput" name="ingredients" type="text" placeholder="e.g. chicken, tomatoes, garlic" aria-label="Ingredients" required />
+              <input id="notesInput" name="notes" type="text" placeholder="Dietary notes (optional): vegan, no nuts, low-carb" aria-label="Notes (optional)" />
+            </div>
+
+            <div class="controls-row">
+              <div class="filters" role="group" aria-label="Dietary filters">
+                <label><input id="filterVegetarian" type="checkbox" /> Vegetarian</label>
+                <label><input id="filterVegan" type="checkbox" /> Vegan</label>
+                <label><input id="filterGlutenFree" type="checkbox" /> Gluten-free</label>
+                <label><input id="filterDairyFree" type="checkbox" /> Dairy-free</label>
+              </div>
+
+              <div class="actions">
+                <button id="findBtn" type="submit" class="btn btn-cta">Find Recipes</button>
+              </div>
+            </div>
+
+            <div class="example-chips" aria-hidden="false">
+              <button type="button" class="chip" data-example="chickpeas, garlic, lemon">chickpeas + garlic</button>
+              <button type="button" class="chip" data-example="rice, eggs, spring onion">fried rice</button>
+              <button type="button" class="chip" data-example="potatoes, rosemary">rosemary potatoes</button>
+              <button type="button" class="chip" data-example="tomatoes, basil, mozzarella">caprese</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="hero-visual" aria-hidden="true">
+          <!-- big decorative recipe card -->
+          <div class="mock-card">
+            <img class="mock-img" src="https://source.unsplash.com/600x420/?food,plated" alt="A delicious plated dish" />
+            <div class="mock-meta">
+              <h3>Quick Lemon Chickpeas</h3>
+              <p>30 min • Vegetarian • 4 ingredients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECIPES -->
+    <section id="recipes" class="recipes" aria-labelledby="recipesTitle">
+      <div class="section-head">
+        <h2 id="recipesTitle">Recommended Recipes</h2>
+        <div class="small-hint">Results are suggested by AI — tap a card for full steps & ingredients.</div>
+      </div>
+
+      <div id="resultsArea" class="results-area">
+        <div id="recipeContainer" class="recipe-grid" role="list" aria-live="polite"></div>
+        <div id="noResults" class="no-results" hidden>No recipes yet — try searching above.</div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="how" aria-labelledby="howTitle">
+      <h2 id="howTitle">How to get your recipe</h2>
+      <ol class="how-list">
+        <li><strong>Enter ingredients</strong> — separate them with commas (e.g., "eggs, spinach, feta").</li>
+        <li><strong>Optionally add notes</strong> for diet or exclude items (e.g., "no dairy", "vegan").</li>
+        <li><strong>Click Find Recipes</strong>. If you're not logged in you'll be prompted to sign up / login.</li>
+        <li><strong>Free tier</strong> allows 5 recipe generations per calendar day. After that you can unlock more via payment.</li>
+        <li><strong>Tap a card</strong> to expand full ingredients & step-by-step instructions.</li>
+      </ol>
+
+      <div class="how-visual">
+        <img src="/static/img/flow.svg" alt="Flow: Ingredients → AI → Recipes" />
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="about" class="site-footer">
+      <div>© <span id="year"></span> RecipeAI • Built with care.</div>
+      <div class="footer-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </footer>
+  </main>
+
+  <!-- LOGIN / SIGNUP MODAL -->
+  <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-panel">
+      <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+      <h3 id="authTitle">Welcome back</h3>
+      <div class="tabs">
+        <button id="tabLogin" class="tab active">Login</button>
+        <button id="tabSignup" class="tab">Sign up</button>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <label>Username<input id="loginUsername" type="text" required /></label>
+        <label>Password<input id="loginPassword" type="password" required /></label>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+        <div class="form-error" id="loginError" aria-live="polite"></div>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <label>Username<input id="signupUsername" type="text" required /></label>
+        <label>Password<input id="signupPassword" type="password" required /></label>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Create account</button>
+        </div>
+        <div class="form-error" id="signupError" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
